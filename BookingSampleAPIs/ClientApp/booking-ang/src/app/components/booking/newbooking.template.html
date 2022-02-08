@@ -1,0 +1,62 @@
+<div *ngIf="selectedForBooking">
+    <p-dialog [(visible)]="selectedForBooking" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+        <ng-template pTemplate="header">
+            <h4 class="modal-title" id="modal-basic-title">Booking : ({{selectedForBooking?.name}})</h4>
+        </ng-template>
+        <div >
+            <form #form="ngForm" nonValidated [formGroup]="bookingFormGruopElems" (submit)="reserveResource()">
+                <input id="id" class="form-control" [value]="bookFormServ.formData.resIdNum" name="resIdNum"
+                     formControlName="resIdNum" type="hidden">
+                <div  class="row">
+                    <div class="form-group col-6">
+                        <label for="dateFrom">Date From </label>
+                        <div class="input-group">
+                            <p-calendar  [(ngModel)]="bookFormServ.formData.dateFrom"
+                             [readonlyInput]="true" #dp1
+                                inputId="dateFrom" name="dateFrom" formControlName="dateFrom" 
+                                appendTo="body"  [minDate]="fromMinDate" (onSelect)="fromMinChanged($event)" ></p-calendar>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="dp1.toggle()" type="button">
+                                    <span>🗓️</span>
+                                </button>
+                            </div>
+                            <span class="text-danger" >{{fromDateErr}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="dateTo">Date To </label>
+                        <div class="input-group">
+                            <p-calendar  [(ngModel)]="bookFormServ.formData.dateTo" 
+                            [minDate]="toMinDate" [readonlyInput]="true" #dp2
+                            inputId="dateTo" name="dateTo" formControlName="dateTo" appendTo="body"
+                            ></p-calendar>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button">
+                                    <span>🗓️</span>
+                                </button>
+                            </div>
+                        </div>
+                            <span class="text-danger" >{{toDateErr}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="qty">Quantity </label>
+                    <div class="input-group">
+                        <input id="qty" class="form-control" placeholder="booking quantity " name="quantity" type="number"
+                        formControlName="quantity" [(ngModel)]="bookFormServ.formData.bookedQuantity">
+                    </div>
+                    <span class="text-danger" >{{quantityErr}}</span>
+                </div>
+                <hr />
+                
+                <hr />
+            </form>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button  icon="pi pi-check" type="submit" (click)="reserveResource()" label="Book !"
+                class="p-button-text"></p-button>
+            <p-button icon="pi pi-times" (click)="dismiss(true)" label="Cancel"></p-button>
+        </ng-template>
+    </p-dialog>
+  
+</div>

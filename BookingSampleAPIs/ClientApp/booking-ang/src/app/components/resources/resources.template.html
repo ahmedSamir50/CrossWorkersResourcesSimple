@@ -1,0 +1,59 @@
+<div>
+
+    <newbooking-component *ngIf="dispalyNewBooking" [selectedForBooking]="selectedResourceForBooking"
+        (dismissed)="dismiss(true)"></newbooking-component>
+
+    <p-table [value]="resources" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rows]="5"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5,10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="quantity">Quantity <p-sortIcon field="quantity"></p-sortIcon>
+                </th>
+                <th>Book Now ! <p-sortIcon field="id"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-resource let-expanded="expanded">
+            <tr>
+                <td>
+                    <button (click)="getBookings(expanded,resource)" type="button" pButton pRipple [pRowToggler]="resource"
+                        class="p-button-text p-button-rounded p-button-plain"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>{{resource.id}}</td>
+                <td>{{resource.name}}</td>
+                <td>{{resource.quantity | number }}</td>
+                <td> <button pButton icon="pi pi-calendar" label="Book!" class="p-button-primary p-mr-2"
+                        (click)="open(resource)"></button></td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" ngFor let-b [ngForOf]="resouceBookings" let-i="index">
+            <td colspan="4">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Booking ID </th>
+                            <th>From </th>
+                            <th>To </th>
+                            <th>QTY</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let b of resouceBookings">
+                            <td>{{b.id}}</td>
+                            <td>{{b.dateFrom | date}}</td>
+                            <td>{{b.dateTo | date}}</td>
+                            <td>{{b.bookedQuantity | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </ng-template>
+    </p-table>
+</div>
