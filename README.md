@@ -12,3 +12,8 @@ requested booking time range should be designed as reusable in other places.
 email implementation should ONLY write to console “EMAIL SENT TO admin@admin.com FOR
 CREATED BOOKING WITH ID {Id}”. For this task there is no need for real email sending and it is
 only mocked with console write.
+-- 
+Please restore the neugets 
+navigate to \CrossWorkersResourcesSimple-master\BookingSampleAPIs\ClientApp\booking-ang\ and npm install 
+run the application from visual studio
+if it oens the swagger page please remove to the application base url 
